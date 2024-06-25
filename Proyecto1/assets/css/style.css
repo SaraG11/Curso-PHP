@@ -1,0 +1,24 @@
+/* fuentes */
+@font-face {
+    font-family: "Roboto-Ligth";
+    src: url(../fonts/Roboto-Light.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+/* generales */
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Roboto-Ligth";
+    /* text-decoration: none; no pone los subrayados en los enlaces */
+
+}
+.clearfix{
+    clear: both;
+    float: none;
+}
+body{
+   background: url(../img/fondo.png) #f4f4f4;
+   
+    
+}
