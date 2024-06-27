@@ -5,12 +5,19 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: "American-Captain";
+    src: url(../fonts/American-Captain.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
 /* generales */
 *{
     margin: 0px;
     padding: 0px;
     font-family: "Roboto-Ligth";
-    /* text-decoration: none; no pone los subrayados en los enlaces */
+    /* no pone los subrayados en los enlaces */
+    text-decoration: none; 
 
 }
 .clearfix{
@@ -21,4 +28,173 @@ body{
    background: url(../img/fondo.png) #f4f4f4;
    
     
+}
+/* cabecera */
+#header{
+    width: 85%;
+    height: auto;
+    background: transparent;
+    margin: 0px auto;
+}
+
+#logo{
+    float: left;
+    padding-top: 25px;
+    width: 540px;
+    height: 110px;
+}
+#logo a{
+    font-family: 'American-Captain';
+    font-size: 40px;
+    letter-spacing: 2px;
+    color: #FDB44B;
+    transition: all 500ms;
+}
+
+/* menu */
+#nav{
+    clear: both;
+    width: 100%;
+    height: 45px;
+    background: linear-gradient(to bottom, rgb(223, 223, 223) 0px, rgb(255, 255, 255) 100%);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#nav ul{
+    list-style: none;
+}
+#nav ul li{
+    float: left;
+    line-height: 45px;
+    border-right: 1px solid rgb(123, 37, 145);
+
+}
+#nav ul li:hover{
+    background: linear-gradient(to bottom, #f0ab4c 0px, #FDB44B 100%);
+}
+#nav ul li a{
+    display: block;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 15px;
+}
+/* contenido */
+
+#container{
+    width: 85%;
+    height: auto;
+    /* min-height: auto; */
+    margin: 0px auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* sildebar */
+#sidebar{
+    float: right;
+    width: 27%;
+    height: auto;
+
+}
+
+.block-aside{
+    display: block;
+    width: 65%;
+    margin: 0px auto;
+    margin-bottom: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+.block-aside h3{
+    margin-bottom: 15px;
+    color: #FDB44B;
+
+}
+label, 
+input[type='text'],
+input[type='email'],
+input[type='password']{
+    display: block;
+    width: 95%;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password']{
+    margin-bottom: 10px;
+}
+
+input[type='button'],
+input[type='submit']{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: white;
+    background: rgb(92, 26, 109);
+    border-radius: 5px;
+    width: 80px;
+    padding: 7px;
+}
+
+/* contenido principal */
+#principal{
+    float: left;
+    width: 65%;
+    min-height: 570px;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #eee;   
+    padding: 20px;
+    margin-left: 20px;
+    overflow: hidden;
+}
+#principal h1{
+    font-size: 32px;
+    color: rgb(123, 37, 145);
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px #ccc;
+    font-family: 'American-Captain';
+}
+#principal h2{
+    font-size: 20px;
+    color: #FDB44B;
+    letter-spacing: 1px;
+    font-family: 'American-Captain';
+    margin-top: 25px;
+}
+
+#principal p{
+    margin-top: 8px;
+}
+
+#ver-todas a{
+    display: block;
+    border-radius: 10px;
+    padding: 15px;
+    color: white;
+    background: rgb(92, 26, 109);
+    border: 1px solid;
+    cursor: pointer;
+    width: 180px;
+    margin: 0px auto;
+    margin-top: 25px;
+    text-align: center;
+}
+/* footer */
+
+#footer{
+    clear: both;
+    width: 85%;
+    margin: 0px auto;
+    background: linear-gradient(to bottom, rgb(223, 223, 223) 0px, rgb(255, 255, 255) 100%);
+    border: 1px solid #c9c9;
+    border-bottom: none;
+    border-radius: 8px 8px 0px 0px;
+    color: rgb(123, 37, 145);
+    height: auto;
+    padding: 15px;
+    text-align: center;
 }
