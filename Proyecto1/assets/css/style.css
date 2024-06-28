@@ -29,6 +29,18 @@ body{
    
     
 }
+/* alertas */
+.alerta{
+    padding: 5px;
+    font-size: 14px;
+    color: white;
+    background: rgb(87, 187, 87);
+    margin-bottom: 15px;
+    border-radius: 3px;
+}
+.alerta-error{
+    background: rgb(201, 96, 96);
+}
 /* cabecera */
 #header{
     width: 85%;
