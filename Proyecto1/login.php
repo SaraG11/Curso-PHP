@@ -6,6 +6,13 @@ require_once './includes/conection.php';
 
 // recoger datos del formulario
 if(isset($_POST)){
+
+    // borrar error antiguo
+    if(isset($_SESSION['error_login'])){
+        unset($_SESSION['error_login']);
+    }
+
+    // recogo datos del formulario
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
@@ -22,9 +29,7 @@ if(isset($_POST)){
         if($verify){
             // utilizar una sesion para guardar los datos del usuarios logeado
             $_SESSION['usuario'] = $user;
-            if(isset($_SESSION['error_login'])){
-                unset($_SESSION['error_login']);
-            }
+           
 
         }else{
             // error de sesion con el fallo

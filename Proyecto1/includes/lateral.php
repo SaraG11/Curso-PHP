@@ -5,12 +5,19 @@ require_once 'helpers.php';
 <aside id="sidebar">
     <?php if(isset($_SESSION['usuario'])) : ?>
     <div id="usuario-login" class="block-aside">
-    <h3>Bienvenido, <?=$_SESSION['usuario']['nombre']; ?></h3>
-        
+        <h3>Bienvenido, <?=$_SESSION['usuario']['nombre']; ?></h3>
+        <!-- botones -->
+        <a href="exit.php" class="boton">Cerrar sesion</a>
     </div>
     <?php endif; ?>
+
         <div id="login" class="block-aside">
             <h3>Login</h3>
+            <?php if(isset($_SESSION['error_login'])) : ?>
+            <div class="alerta alerta-error">
+              <?=$_SESSION['error_login']; ?>
+             </div>
+            <?php endif; ?>
             <form action="login.php" method="POST">
                 
                 <label for="email">Email</label>
