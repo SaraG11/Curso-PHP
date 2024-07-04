@@ -27,7 +27,7 @@ class Coche{
 } //fin definicion de la clase
 
 // crear un objeto o instanciar una clase
-$coche = new Coche();
+// $coche = new Coche();
 // var_dump($coche);
 
 // usando métodos
@@ -44,7 +44,7 @@ $coche->frenar();
 
 echo "velocidad del coche:".$coche->getVelocidad();
 
-$coche2 = new Coche();
+// $coche2 = new Coche();
 $coche2->setColor("Azul");
 
 var_dump($coche2);

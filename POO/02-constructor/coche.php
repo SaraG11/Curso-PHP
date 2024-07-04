@@ -44,4 +44,14 @@ class Coche{
     public function getVelocidad() {
         return $this->velocidad;
     }
+    public function mostrarInformacion($miObjeto){
+        $info = "<h2>Informaciond del coche</h2>";
+        $info .= "Color: ".$miObjeto->color;
+        $info .= "<br> Marca: ".$miObjeto->marca;
+        $info .= "<br> Modelo: ".$miObjeto->modelo;
+        $info .= "<br> Velocidad: ".$miObjeto->velocidad;
+        $info .= "<br> Plazas: ".$miObjeto->plazas;
+
+        return $info;
+    }
 } //fin definicion de la clase
