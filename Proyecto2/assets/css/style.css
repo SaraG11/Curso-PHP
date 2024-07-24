@@ -1,0 +1,15 @@
+:root{
+    --dark: #16191c;
+    --dark-x: #23272c;
+    --light: #ffffff;
+}
+*{
+    font-family: "Quicksand" !important;
+}
+.bg-dark{
+    background-color: var(--dark) !important;
+}
+.bg-dark-x{
+    background-color: var(--dark-x);
+}
+
