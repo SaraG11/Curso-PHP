@@ -12,4 +12,69 @@
 .bg-dark-x{
     background-color: var(--dark-x);
 }
+.bg-img{
+    background-size: cover;
 
+}
+.fw-700{
+    font-weight: 700 !important;
+}
+.fw-500{
+    font-weight: 500 !important;
+}
+#nb-brand{
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: 0.8px;
+}
+.nav-item{
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+}
+.fs-1{
+    font-size: 1.2rem !important;
+}
+.bg-transparent{
+    background-color: transparent !important;
+}
+.h-470{
+    min-height: 470px;
+}
+.h-400{
+    min-height: 400px;
+}
+.border-none{
+    border: none !important;
+}
+.opacity-black{
+    opacity: 85% !important;
+    background-color: #0000008c !important;
+    z-index: 0;
+}
+.btn-style{
+    background-color: white !important;
+    color: #1f1f1f !important;
+    font-weight: 500 !important;
+    padding: 10px !important;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    border: none !important;
+    border-radius: 0px !important;
+}
+.px-0{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.py-28{
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+
+}
+.px-4{
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+}
+/* body */
+.mt-6{
+    margin-top: 6rem !important;
+}
