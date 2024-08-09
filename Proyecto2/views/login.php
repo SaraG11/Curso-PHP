@@ -20,7 +20,7 @@
             </div>
             <div class="col-lg-5 ">
                 <h2 class="text-center text-light mb-5">T-Shirt Store</h2>
-                    <form>
+                    <form action="<?=base_url?>?controller=users&action=loginUser" method="POST">
                         <div class="mb-3 d-flex flex-column">
                             <label for="email" class="form-label text-light fw-bolder">Email address</label>
                             <input type="email" class="form-control-lg bg-dark-x border-0 text-light" placeholder="Email address" id="email" name="email" aria-describedby="emailHelp">
@@ -32,15 +32,15 @@
                         </div>
                         <div class="d-flex justify-content-start">
                             <div class="p-2"><label for="exampleInputEmail1" class="form-label text-light fw-bolder">¿Aún no tienes cuenta? </label></div>
-                            <div class="p-2"><a href="<?=base_url?>views/user/register.php">Registrar</a></div>
+                            <div class="p-2"><a href="<?=base_url?>?controller=users&action=registerUser">Registrar</a></div>
                         </div>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary mt-2" id="ingresar" type="button">Ingresar</button>
+                            <button class="btn btn-primary mt-2" id="ingresar" type="submit">Ingresar</button>
                             <!-- <a class="btn btn-primary mt-2" id="ingresar" href="../views/producto/principal.php">Ingresar</a> -->
                         </div>
                         
                     </form>
-             </div>
+                </div>
             </div>
         </div>
     </div>

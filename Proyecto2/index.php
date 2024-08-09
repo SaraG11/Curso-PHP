@@ -1,8 +1,9 @@
 <?php
-
+session_start();
 require_once './autoload.php';
 require_once './config/db.php';
 require_once './config/parameters.php';
+require_once './helpers/utils.php';
 
 
 function showError(){
@@ -49,8 +50,8 @@ if(isset($_GET['controller']) && class_exists($_GET['controller'].'Controller') 
     
 
 }elseif(!isset($_GET['controller']) && !isset($_GET['action'])){
-        // require_once './views/login.php';
-        echo 'Fail controller and action';
+        require_once './views/login.php';
+        // echo 'Fail controller and action';
     
 }else{
     showError();

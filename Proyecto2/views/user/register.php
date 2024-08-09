@@ -20,26 +20,61 @@
             </div>
             <div class="col-lg-5">
                 <h2 class="text-center text-light mb-3">T-Shirt Store</h2>
-                    <form action="index.php?controller=users&action=saveUser" method="POST">
+                <form class="needs-validation" action="<?=base_url?>?controller=users&action=saveUser" method="POST" novalidate>
                         <div class="mb-3 d-flex flex-column">
                             <label for="nombre" class="form-label text-light fw-bolder">Name</label>
-                            <input type="text" class="form-control-lg bg-dark-x border-0 text-light" placeholder="Name(s)" name="nombre" aria-describedby="emailHelp">
-                            
+                            <input type="text" class="form-control-lg bg-dark-x border-0 text-light" placeholder="Name(s)" name="nombre"  required>
+                            <!-- mensaje de validacion -->
+                             <div class="invalid-feedback">
+                                El nombre no es válido. Debe contener solo letras y no estar vacío.
+                            </div>
+                            <div class="valid-feedback">
+                                Nombre válido
+                            </div>
                         </div>
                         <div class="mb-3 d-flex flex-column">
                             <label for="apellidos" class="form-label text-light fw-bolder">Last Name</label>
-                            <input type="text" class="form-control-lg bg-dark-x border-0 text-light" placeholder="LastName" name="apellidos">
+                            <input type="text" class="form-control-lg bg-dark-x border-0 text-light" placeholder="LastName" name="apellidos" required>
+                             <!-- mensaje de validacion -->
+                             <div class="invalid-feedback">
+                                Introduce correctamente los apellidos
+                            </div>
+                            <div class="valid-feedback">
+                                Apellidos válidos
+                            </div>
                         </div>
                         <div class="mb-3 d-flex flex-column">
                             <label for="email" class="form-label text-light fw-bolder">Email address</label>
-                            <input type="email" class="form-control-lg bg-dark-x border-0 text-light" placeholder="Email address" name="email" aria-describedby="emailHelp">
-                            
+                            <input type="email" class="form-control-lg bg-dark-x border-0 text-light" placeholder="Email address" name="email" aria-describedby="emailHelp" required>
+                             <!-- mensaje de validacion -->
+                             <div class="invalid-feedback">
+                                Introduce un email válido
+                            </div>
+                            <div class="valid-feedback">
+                                Email válido
+                            </div>
                         </div>
                         <div class="mb-3 d-flex flex-column">
                             <label for="password" class="form-label text-light fw-bolder">Password</label>
-                            <input type="password" class="form-control-lg bg-dark-x border-0 text-light" placeholder="Password" name="password">
+                            <input type="password" class="form-control-lg bg-dark-x border-0 text-light" placeholder="Password" name="password" required>
+                             <!-- mensaje de validacion -->
+                             <div class="invalid-feedback">
+                                La contraseña no es válida. Debe tener al menos 8 caracteres, incluir al menos un número y una letra mayúscula.
+                            <div class="valid-feedback">
+                                Contraseña válida
+                            </div>
                         </div>
-                        
+                        <?php
+                            if(isset($_SESSION['register']) && $_SESSION['register'] == 'complete') : ?>
+                        <div class="alert alert-success" role="alert">
+                            ¡Registro completado!
+                        </div>
+                        <?php elseif(isset($_SESSION['register']) && $_SESSION['register'] == 'failed'): ?>
+                            <div class="alert alert-danger" role="alert">
+                                ¡Registro fallido!, verifica los datos
+                            </div>
+                        <?php endif;?>
+                        <?php utils::deleteSession('register'); ?>
                         <div class="d-grid gap-2">
                             <button class="btn btn-primary mt-2" id="register" type="submit">Register</button>
                         </div>
@@ -50,9 +85,24 @@
         </div>
     </div>
 
-   
-   
-<script src="./assets/js/app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="../../assets/js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script>
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+
+        }, false)
+        })
+</script>
 </body>
 </html>

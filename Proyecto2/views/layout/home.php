@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,14 +41,23 @@
                     <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                       <img src="https://github.com/mdo.png" alt="mdo" width="37" height="37" class="rounded-circle me-2">
                       <div class="d-flex flex-column text-start">
-                        <span style="font-weight: 700;">Sara G</span>
+                        <span style="font-weight: 700;"><?= $_SESSION['identity']->nombre ?></span>
                       </div>
                     </a>
                     <ul class="dropdown-menu text-small">
+                        <li><a class="dropdown-item" href="#">Cuenta</a></li>
+                      <!-- opciones de administrador -->
+                      <?php if(isset($_SESSION['admin'])) : ?>
+                        <li><a class="dropdown-item" href="#">Gestionar categorias</a></li>
+                        <li><a class="dropdown-item" href="#">Gestionar productos</a></li>
+                        <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
+                      <?php endif; ?>
+                      <?php if(isset($_SESSION['identity'])): ?>
                       <li><a class="dropdown-item" href="#">Mis pedidos</a></li>
-                      <li><a class="dropdown-item" href="#">Cuenta</a></li>
                       <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Cerrar Sesion</a></li>
+                      <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
+                      <?php endif; ?>
+                      
                     </ul>
                   </div>
                 </div>
