@@ -13,7 +13,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <!-- header -->
+     <!-- header -->
     <header>
         <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container">
@@ -26,14 +26,21 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Sudaderas</a>
+                        <!-- Listado de categorias en el menu -->
+                        <?php $categories = Utils::showCategories(); ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                                Categorias
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php while($cat = $categories->fetch_object()): ?>
+                                <li><a class="dropdown-item" href="#"><?= $cat->nombre ?></a></li>
+                                <?php endwhile; ?>
+                            </ul>
                         </li>
+                        <!-- fin de listado de categorias -->
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Playeras</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Camisas</a>
+                            <a class="nav-link active" href="#">Contact</a>
                         </li>
                     </ul>
                     <div class="dropdown text-end">
@@ -62,18 +69,18 @@
                 </div>
             </div>
         </nav>
-    </header>    
+    </header>     
     
      <!-- Crear categorias -->
      <div class="container mt-5 w-25">
         <div class="mb-3 row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Categoria</label>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Save</button>
-            </div>
-
-            
+            <form action="<?=base_url?>?controller=category&action=saveCategory" method="POST">
+            <label for="nombre" class="col-sm-2 col-form-label">Categoria</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="nombre" aria-describedby="button-addon2" require>
+                    <button class="btn btn-outline-dark" type="submit" id="savecat">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 

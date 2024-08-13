@@ -22,18 +22,13 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <?php $categories = Utils::showCategories(); ?>
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Sudaderas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Playeras</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Camisas</a>
+                            <a class="nav-link active" href="#">Contact</a>
                         </li>
                     </ul>
                     <div class="dropdown text-end">
@@ -91,7 +86,7 @@
             </tbody>
         <?php endwhile ?>
         </table>
-        <button type="submit" class="btn btn-success">Crear categoria</button>
+        <a href="<?=base_url?>?controller=category&action=create" type="submit" class="btn btn-success">Crear categoria</a>
     </div>  
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

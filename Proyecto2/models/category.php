@@ -20,11 +20,21 @@ class Category{
         $this->id_cat = $id_cat;
     }
     function setNombre($nombre){
-        $this->nombre = $nombre;
+        $this->nombre = $this->db->real_escape_string($nombre);
     }
     public function getAll(){
-        $category = $this->db->query("SELECT * FROM categoria;");
+        $category = $this->db->query("SELECT * FROM categoria ORDER BY id_cat DESC;");
         return $category;
+    }
+    public function save(){
+        $sql = "INSERT INTO categoria VALUES(NULL, '{$this->getNombre()}');";
+        $save = $this->db->query($sql);
+        $result = false;
+        if($save){
+            $result = true;
+        }
+        return $result;
+        
     }
 
 }

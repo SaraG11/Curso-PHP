@@ -1,4 +1,19 @@
-<!-- header -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../../Proyecto2/assets/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <!-- header -->
     <header>
         <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container">
@@ -12,18 +27,6 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">Home</a>
                         </li>
-                        <!-- Listado de categorias en el menu -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
-                                Categorias
-                            </a>
-                            <ul class="dropdown-menu">
-                                <?php while($cat = $categories->fetch_object()): ?>
-                                <li><a class="dropdown-item" href="#"><?= $cat->nombre ?></a></li>
-                                <?php endwhile; ?>
-                            </ul>
-                        </li>
-                        <!-- fin de listado de categorias -->
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Contact</a>
                         </li>
@@ -56,3 +59,39 @@
         </nav>
     </header>    
     
+    <!-- Tabla de categorias -->
+    <div class="container text-center">
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="mb-3 mt-5">
+                    <h2>Productos</h2>
+                </div>
+            </div>            
+        </div>
+    </div>  
+    <div class="container w-25">
+        <table class="table table-dark mt-3 text-center">
+            <thead>
+                <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Producto</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php while($prod = $products->fetch_object()): ?>
+                <tr>
+                <th scope="row"><?=$prod->id_cat;?></th>
+                <td><?=$prod->nombre;?></td>
+                <td>$<?=$prod->precio;?></td>
+                <td><?=$prod->stock;?></td>
+                </tr>
+            </tbody>
+        <?php endwhile ?>
+        </table>
+        <a href="<?=base_url?>?controller=product&action=create" type="submit" class="btn btn-success">Crear producto</a>
+    </div>  
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
