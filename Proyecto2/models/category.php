@@ -26,6 +26,10 @@ class Category{
         $category = $this->db->query("SELECT * FROM categoria ORDER BY id_cat DESC;");
         return $category;
     }
+    public function getOne(){
+        $category = $this->db->query("SELECT * FROM categoria WHERE id_cat ={$this->getId()}");
+        return $category->fetch_object();
+    }
     public function save(){
         $sql = "INSERT INTO categoria VALUES(NULL, '{$this->getNombre()}');";
         $save = $this->db->query($sql);

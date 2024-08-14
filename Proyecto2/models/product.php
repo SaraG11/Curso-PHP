@@ -80,6 +80,16 @@ class Product{
         $products = $this->db->query("SELECT * FROM productos ORDER BY id_prod DESC");
         return $products;
     }
+    public function getAllCategory(){
+        $sql = "SELECT p.*, c.nombre AS 'nombrecat' FROM productos p"
+                ." INNER JOIN categoria c ON c.id_cat = p.id_cat"
+                ." WHERE p.id_cat = {$this->getCategoria_id()}"
+                ." ORDER BY id_cat DESC";
+        $products = $this->db->query($sql);
+        // var_dump($sql); 
+        return $products;
+        
+    }
     public function getOne(){
         $product = $this->db->query("SELECT * FROM productos WHERE id_prod = {$this->getId()}");
         return $product->fetch_object();

@@ -22,8 +22,8 @@ if(isset($edit) && isset($prod) && is_object($prod)){
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-     <!-- header -->
-     <header>
+     <!-- header --> 
+    <header>
         <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container">
                 <a class="navbar-brand fw-semibold" id="nb-brand" href="<?=base_url?>?controller=home&action=body">T-Shirt</a>
@@ -31,17 +31,30 @@ if(isset($edit) && isset($prod) && is_object($prod)){
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <?php $categories = Utils::showCategories(); ?>
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="<?=base_url?>?controller=home&action=body">Home</a>
                         </li>
+                        <!-- Listado de categorias en el menu -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">
+                                Categorias
+                            </a>
+                            <ul class="dropdown-menu">
+                                <?php while($cat = $categories->fetch_object()): ?>
+                                <li><a class="dropdown-item" href="<?=base_url?>?controller=category&action=showCat&id_cat=<?=$cat->id_cat?>"><?= $cat->nombre ?></a></li>
+                                <?php endwhile; ?>
+                            </ul>
+                        </li>
+                        <!-- fin de listado de categorias -->
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Contact</a>
                         </li>
                     </ul>
                     <div class="dropdown text-end">
                     <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img src="https://github.com/mdo.png" alt="mdo" width="37" height="37" class="rounded-circle me-2">
+                      <img src="<?=base_url?>assets/img/usuario.png" alt="mdo" width="37" height="37" class="rounded-circle me-2">
                       <div class="d-flex flex-column text-start">
                         <span style="font-weight: 700;"><?= $_SESSION['identity']->nombre ?></span>
                       </div>
@@ -51,7 +64,7 @@ if(isset($edit) && isset($prod) && is_object($prod)){
                       <!-- opciones de administrador -->
                       <?php if(isset($_SESSION['admin'])) : ?>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=category&action=index">Gestionar categorias</a></li>
-                        <li><a class="dropdown-item" href="#">Gestionar productos</a></li>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=product&action=gestion">Gestionar productos</a></li>
                         <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
                       <?php endif; ?>
                       <?php if(isset($_SESSION['identity'])): ?>
@@ -65,7 +78,7 @@ if(isset($edit) && isset($prod) && is_object($prod)){
                 </div>
             </div>
         </nav>
-    </header>    
+    </header>   
     
     <!-- Formulario para nuevo producto -->
     <div class="container-md mt-5">

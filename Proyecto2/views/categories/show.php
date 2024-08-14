@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Shop</title>
+    <title>Listado Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../Proyecto2/assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-     <!-- header --> 
+    <!-- header --> 
     <header>
         <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container">
@@ -69,21 +69,57 @@
                 </div>
             </div>
         </nav>
-    </header>      
-    
-     <!-- Crear categorias -->
-     <div class="container mt-5 w-25">
-        <div class="mb-3 row">
-            <form action="<?=base_url?>?controller=category&action=saveCategory" method="POST">
-            <label for="nombre" class="col-sm-2 col-form-label">Categoria</label>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="nombre" aria-describedby="button-addon2" require>
-                    <button class="btn btn-outline-dark" type="submit" id="savecat">Save</button>
+    </header>    
+    <!-- BODY DE CARDS -->
+    <div class="container mt-5">
+        <div class="container text-center">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="mb-3">
+                          <!-- Mostrar nombre de categoria -->
+                          <?php if(isset($category)): ?>
+                            <h1><?=$category->nombre ?></h1>
+                            <?php else: ?>
+                              <h2>La categoría no existe</h2>
+                          <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            <?php if($products->num_rows == 0) : ?>
+              <div class="mb-2">
+                <small class="text-muted fw-500">No hay productos para mostrar</small>
+              </div>
+            <?php else: ?>
+            <div class="row">
+                <!-- Cards de cada producto -->
+                <?php while($product = $products->fetch_object()) : ?>
+                <div class="col-4">
+                    <div class="card" style="width: 18rem;">
+                        <?php if($product->imagen != null) : ?>
+                          <img src="<?=base_url?>uploads/images/<?=$product->imagen?>" class="card-img-top" alt="" height="300px">
+                        <?php else: ?>
+                          <img src="<?=base_url?>assets/img/ropa_global.jpg" class="card-img-top" alt="" height="300px">
+                        <?php endif;?>
+                        <div class="card-body">
+                            <h5 class="card-title"><?=$product->nombre?></h5>
+                            <p class="card-text"><?=$product->descripcion?></p>
+                            <p class="card-text">$<?=$product->precio?></p>
+                        </div>
+                        <div class="card-body">
+                            <a href="#" class="btn btn-info">Agregar</a>
+                            <!-- <a href="#" class="btn ">Another link</a> -->
+                        </div>
+                    </div>
+                </div>
+                <?php endwhile; ?>
+            </div>
+            <?php endif;?>
         </div>
+        
     </div>
-
+   
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5JQvFLb5Oe3MY1/df9gImpphH5G1R8Pp2NdT1wZjf9" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 </html>
