@@ -25,7 +25,7 @@
                     <?php $categories = Utils::showCategories(); ?>
                     <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="<?=base_url?>?controller=home&action=body">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">Contact</a>
@@ -66,7 +66,33 @@
                 <div class="mb-3 mt-5">
                     <h2>Productos</h2>
                 </div>
-            </div>            
+            </div> 
+            <!-- Validación de registro -->
+            <div class="row mb-3">
+                <?php if(isset($_SESSION['product']) && $_SESSION['product'] == 'complete') : ?>
+                    <div class="alert alert-success" role="alert">
+                        Producto creado con éxito.
+                    </div>
+                <?php elseif(isset($_SESSION['product']) && $_SESSION['product'] == 'failed') : ?>
+                    <div class="alert alert-danger" role="alert">
+                        Error al crear el producto.
+                    </div>
+                <?php endif; ?>
+                <?php Utils::deleteSession('product'); ?> 
+            </div>
+            <!-- Validación de eliminar producto -->
+            <div class="row mb-3">
+                <?php if(isset($_SESSION['delete']) && $_SESSION['delete'] == 'complete') : ?>
+                    <div class="alert alert-success" role="alert">
+                        Producto eliminado!
+                    </div>
+                <?php elseif(isset($_SESSION['delete']) && $_SESSION['delete'] == 'failed') : ?>
+                    <div class="alert alert-danger" role="alert">
+                        Error al eliminar el producto.
+                    </div>
+                <?php endif; ?>
+                <?php Utils::deleteSession('delete'); ?> 
+            </div>
         </div>
     </div>  
     <div class="container w-25">
@@ -77,15 +103,20 @@
                 <th scope="col">Producto</th>
                 <th scope="col">Precio</th>
                 <th scope="col">Stock</th>
+                <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
             <?php while($prod = $products->fetch_object()): ?>
                 <tr>
-                <th scope="row"><?=$prod->id_cat;?></th>
+                <th scope="row"><?=$prod->id_prod;?></th>
                 <td><?=$prod->nombre;?></td>
                 <td>$<?=$prod->precio;?></td>
                 <td><?=$prod->stock;?></td>
+                <td>
+                    <a href="<?=base_url?>?controller=product&action=deleteProd&id_prod=<?=$prod->id_prod?>"><ion-icon name="close-outline"></ion-icon></a>
+                    <a href="<?=base_url?>?controller=product&action=editProd&id_prod=<?=$prod->id_prod?>"><ion-icon name="create-outline"></ion-icon></a>
+                </td>
                 </tr>
             </tbody>
         <?php endwhile ?>
@@ -93,5 +124,7 @@
         <a href="<?=base_url?>?controller=product&action=create" type="submit" class="btn btn-success">Crear producto</a>
     </div>  
 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5JQvFLb5Oe3MY1/df9gImpphH5G1R8Pp2NdT1wZjf9" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>

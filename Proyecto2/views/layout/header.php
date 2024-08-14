@@ -40,7 +40,7 @@
                       <!-- opciones de administrador -->
                       <?php if(isset($_SESSION['admin'])) : ?>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=category&action=index">Gestionar categorias</a></li>
-                        <li><a class="dropdown-item" href="#">Gestionar productos</a></li>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=product&action=gestion">Gestionar productos</a></li>
                         <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
                       <?php endif; ?>
                       <?php if(isset($_SESSION['identity'])): ?>

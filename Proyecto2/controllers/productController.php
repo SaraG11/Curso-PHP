@@ -28,7 +28,7 @@ class productController{
             $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : false;
             $precio = isset($_POST['precio']) ? $_POST['precio'] : false;
             $stock = isset($_POST['stock']) ? $_POST['stock'] : false;
-            // $imagen = isset($_POST['imagen']) ? $_POST['imagen'] : false;
+
             if($nombre && $descripcion && $categoria && $precio && $stock){
                 $product = new Product();
                 $product->setNombre($nombre);
@@ -37,7 +37,29 @@ class productController{
                 $product->setPrecio($precio);
                 $product->setStock($stock);
 
-                $save = $product->save();
+                // Guardar la imagen 
+                if(isset($_FILES['imagen'])){
+                    $file = $_FILES['imagen'];
+                    $filename = $file['name'];
+                    $mimetype = $file['type'];
+                    if($mimetype == 'image/jpg' || $mimetype == 'image/jpeg' || $mimetype == 'image/png' || $mimetype == 'image/gif'){
+                        if(!is_dir('uploads/images')){
+                            mkdir('uploads/images', 0777, true);
+                        }
+                        $product->setImagen($filename);
+                        move_uploaded_file($file['tmp_name'], 'uploads/images/'.$filename);
+                    }
+                }
+                // validacion para actualizar registro
+                if(isset($_GET['id_prod'])){
+                    $id_prod = $_GET['id_prod'];
+                    $product->setId($id_prod);
+                    $save = $product->edit();
+                }else{
+                    // aquí va para el guardado
+                    $save = $product->save();
+                }
+                
                 if($save){
                     $_SESSION['product'] = 'complete';
                 }else{
@@ -49,5 +71,40 @@ class productController{
         }else{
             $_SESSION['product'] = 'failed';
         }
+        header("Location:".base_url."?controller=product&action=gestion");
     }
+    public function deleteProd() {
+        utils::isAdmin();
+        if(isset($_GET['id_prod'])){
+            $id_prod = $_GET['id_prod'];
+            $product = new Product;
+            $product->setId($id_prod);
+            $delete = $product->delete();
+            if($delete){
+                $_SESSION['delete'] = 'complete';
+            }else{
+                $_SESSION['delete'] = 'failed';
+            }
+        }else{
+            $_SESSION['delete'] = 'failed';
+        }
+        header('Location:'.base_url.'?controller=product&action=gestion');
+        
+    }
+    public function editProd(){
+        Utils::isAdmin();
+        
+        if(isset($_GET['id_prod'])){
+            $id_prod = $_GET['id_prod'];
+            $edit = true;
+            $product = new Product();
+            $product->setId($id_prod);
+            $prod = $product->getOne();
+            require_once 'views/products/newProduct.php';
+        }else{
+            header('Location:'.base_url.'?controller=product&action=gestion');
+        }
+        
+    }
+
 }
