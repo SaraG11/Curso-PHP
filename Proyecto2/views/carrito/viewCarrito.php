@@ -13,7 +13,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <!-- header --> 
+      <!-- header --> 
     <header>
         <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container">
@@ -59,7 +59,8 @@
                         <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
                       <?php endif; ?>
                       <?php if(isset($_SESSION['identity'])): ?>
-                        <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito ()</a></li>
+                      <?php $stats = Utils::statsCarrito() ?>
+                      <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
                       <?php endif; ?>
@@ -69,55 +70,60 @@
                 </div>
             </div>
         </nav>
-    </header>    
-    <!-- BODY DE CARDS -->
-    <div class="container mt-5">
-        <div class="container text-center">
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <div class="mb-3">
-                          <!-- Mostrar nombre de categoria -->
-                          <?php if(isset($category)): ?>
-                            <h1><?=$category->nombre ?></h1>
-                            <?php else: ?>
-                              <h2>La categoría no existe</h2>
-                          <?php endif; ?>
-                        </div>
+    </header> 
+    <!-- Validacion de si existen articulos en el carrito si no manda un mensaje -->
+    <?php if(!isset($_SESSION['carrito'])) : ?>
+            <div class="container text-center mt-4">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <h2>No tienes artículos agregados al carrito</h2>
                     </div>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores molestias doloremque in? Harum, ab necessitatibus!</p>
                 </div>
-            <?php if($products->num_rows == 0) : ?>
-              <div class="mb-2">
-                <small class="text-muted fw-500">No hay productos para mostrar</small>
-              </div>
-            <?php else: ?>
-            <div class="row">
-                <!-- Cards de cada producto -->
-                <?php while($product = $products->fetch_object()) : ?>
-                <div class="col-4">
-                    <div class="card" style="width: 18rem;">
-                        <?php if($product->imagen != null) : ?>
-                          <img src="<?=base_url?>uploads/images/<?=$product->imagen?>" class="card-img-top" alt="" height="300px">
-                        <?php else: ?>
-                          <img src="<?=base_url?>assets/img/ropa_global.jpg" class="card-img-top" alt="" height="300px">
-                        <?php endif;?>
-                        <div class="card-body">
-                            <h5 class="card-title"><?=$product->nombre?></h5>
-                            <p class="card-text"><?=$product->descripcion?></p>
-                            <p class="card-text">$<?=$product->precio?></p>
-                        </div>
-                        <div class="card-body">
-                            <a href="<?=base_url?>?controller=carrito&action=add&id_prod=<?=$product->id_prod?>" class="btn btn-info">Agregar</a>
-                            <!-- <a href="#" class="btn ">Another link</a> -->
-                        </div>
-                    </div>
-                </div>
-                <?php endwhile; ?>
             </div>
-            <?php endif;?>
-        </div>
-        
+        <?php else: ?>
+    <div class="container mt-4">
+        <table class="table table-sm align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Detalle</th>
+                    <th scope="col">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                    foreach($carrito as $indice => $element) : 
+                ?>
+                <tr>
+                    <td style="width: 5% !important;">
+                        <?php if($element['imagen'] != null) : ?>
+                            <img src="<?=base_url?>uploads/images/<?=$element['imagen']?>" class="card-img-top img-carrito" alt="">
+                        <?php else: ?>
+                            <img src="<?=base_url?>assets/img/ropa_global.jpg" class="card-img-top img-carrito" alt="">
+                        <?php endif;?>
+                    </td>
+                    <td style="width: 5% !important;">
+                        <h5><a class="link-dark link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<?=base_url?>?controller=category&action=showCat&id_cat=<?=$element['id_cat']?>"><?=$element['nombre'] ?></a></h5>
+                        <small>Precio Unidad: $<?=$element['precio'] ?></small> <br>
+                        <small>Unidades: <?=$element['unidades'] ?></small>
+                    </td>
+                    <td style="width: 8% !important;">
+                        <a href="#"><ion-icon name="trash" class="icon-delete"></ion-icon></a>
+                    </td>
+                </tr>
+                <?php endforeach;?>
+                <tr>
+                <th scope="row">Total</th>
+                <?php $stats = Utils::statsCarrito();?>
+                    <td >$ <?=$stats['total']?></td>
+                    <td ><a href="<?=base_url?>?controller=order&action=orderUser" class="btn btn-warning">Realizar Pedido</a></td>                    
+                </tr>
+            </tbody>
+        </table>
+        <a href="<?=base_url?>?controller=carrito&action=deleteAll" class="btn btn-danger mt-5">Vaciar Carrito</a>
     </div>
-   
+    <?php endif;?>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5JQvFLb5Oe3MY1/df9gImpphH5G1R8Pp2NdT1wZjf9" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
