@@ -60,6 +60,7 @@
                       <?php endif; ?>
                       <?php if(!isset($_SESSION['admin'])): ?>
                         <?php $stats = Utils::statsCarrito() ?>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=my_orders">Mis Pedidos</a></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
                       <?php endif; ?>
                       <li><hr class="dropdown-divider"></li>

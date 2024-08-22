@@ -1,19 +1,19 @@
-<!-- posible codigo para el requeirmiento de sesion -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order </title>
+    <title>Listado Productos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?=base_url?>assets/css/style.css">
+    <link rel="stylesheet" href="../../../Proyecto2/assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <!-- header --> 
+      <!-- header --> 
     <header>
         <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container">
@@ -61,6 +61,7 @@
                       <?php if(isset($_SESSION['identity'])): ?>
                       <?php $stats = Utils::statsCarrito() ?>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
+                      <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=my_orders">Mis Pedidos</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
                       <?php endif; ?>
@@ -71,50 +72,46 @@
             </div>
         </nav>
     </header> 
-    <!-- Incio de sesion -->
-    <div class="container-sm mt-5">
-        <form class="row g-3 needs-validation" action="<?=base_url?>?controller=order&action=addOrder" method="POST" novalidate>
-            <div class="row justify-content-start">
-                <div class="col-3">
-                    <label for="pais" class="form-label">País</label>
-                    <input type="text" class="form-control" name="pais" required>
+    <!-- Mis pedidos -->
+    <div class="container text-center mt-4">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <h2>Mis pedidos</h2>
+                    </div>
+                    <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores molestias doloremque in? Harum, ab necessitatibus!</p>
                 </div>
-                <div class="col-3">
-                    <label for="localidad" class="form-label">Ciudad</label>
-                    <input type="text" class="form-control" name="localidad" required>
-                </div>
-            </div>
-            <div class="row justify-content-start">
-                <div class="col-8">
-                    <label for="direccion" class="form-label">Direccion</label>
-                    <input type="text" class="form-control" name="direccion" placeholder="1234 Main St" required>
-                </div>
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-success">Confirmar</button>
-            </div>
-    </form>
     </div>
+    <div class="container w-25 mt-4">
+        <table class="table align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>N° Pedido</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                    while($ped = $orders->fetch_object()):
+                ?>
+                <tr>
+                    <td>
+                        <a class="link-underline link-info  link-underline-opacity-0" href="<?=base_url?>?controller=order&action=detail&id_ped=<?=$ped->id_ped?>"> <?=$ped->id_ped?></a>
+                    </td>
+                    <td>
+                       $ <?=$ped->precio?>
+                    </td>
+                    <td>
+                        <?=$ped->fecha?>
+                    </td>
+                </tr>
+                <?php endwhile;?>
+            </tbody>
+        </table>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5JQvFLb5Oe3MY1/df9gImpphH5G1R8Pp2NdT1wZjf9" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-<script src="../../assets/js/app.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5JQvFLb5Oe3MY1/df9gImpphH5G1R8Pp2NdT1wZjf9" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-            }
-
-            form.classList.add('was-validated')
-
-        }, false)
-        })
-</script>
 </body>
 </html>

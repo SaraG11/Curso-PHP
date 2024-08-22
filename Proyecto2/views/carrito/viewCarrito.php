@@ -61,6 +61,7 @@
                       <?php if(isset($_SESSION['identity'])): ?>
                       <?php $stats = Utils::statsCarrito() ?>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
+                      <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mis Pedidos</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
                       <?php endif; ?>

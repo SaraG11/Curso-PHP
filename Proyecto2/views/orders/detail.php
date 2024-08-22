@@ -1,11 +1,9 @@
-<!-- posible codigo para el requeirmiento de sesion -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order </title>
+    <title>Complete </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="<?=base_url?>assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,50 +69,47 @@
             </div>
         </nav>
     </header> 
-    <!-- Incio de sesion -->
-    <div class="container-sm mt-5">
-        <form class="row g-3 needs-validation" action="<?=base_url?>?controller=order&action=addOrder" method="POST" novalidate>
-            <div class="row justify-content-start">
-                <div class="col-3">
-                    <label for="pais" class="form-label">País</label>
-                    <input type="text" class="form-control" name="pais" required>
-                </div>
-                <div class="col-3">
-                    <label for="localidad" class="form-label">Ciudad</label>
-                    <input type="text" class="form-control" name="localidad" required>
-                </div>
+    <div class="container text-center mt-4">
+        <h2>Detalle del pedido</h2>
+        <?php if(isset($order)) : ?>
+            <!-- Muestra los datos del pedido -->
+            <div class="container w-50 p-3">
+                <table class="table table-borderless">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>
+                            <p class="float-start">Datos de Pedido </p> 
+                            <p  class="fw-bolder float-end"> N° Pedido: <?= $order->id_ped ?></p><br>
+                            <p  class="fw-bolder float-end">Total a pagar: $<?= $order->precio ?></p>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="float-start">
+                        <tr>
+                            <th colspan="2">Productos Ordenados</th>
+                        </tr>
+                        <?php while ($product = $products->fetch_object()):?>
+                            <td style="width: 5% !important;">
+                                <?php if($product->imagen != null) : ?>
+                                    <img src="<?=base_url?>uploads/images/<?=$product->imagen?>" class="card-img-top img-carrito" alt="">
+                                <?php else: ?>
+                                    <img src="<?=base_url?>assets/img/ropa_global.jpg" class="card-img-top img-carrito" alt="">
+                                <?php endif;?>
+                            </td>
+                        <td style="width: 5% !important;">
+                            <p>Nombre: <?= $product->nombre ?></p>
+                            <p>Unidades: <?= $product->unidades ?></p>
+                        </td>
+                        <?php endwhile; ?>
+                        
+                    </tbody>
+                </table>
             </div>
-            <div class="row justify-content-start">
-                <div class="col-8">
-                    <label for="direccion" class="form-label">Direccion</label>
-                    <input type="text" class="form-control" name="direccion" placeholder="1234 Main St" required>
-                </div>
-            </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-success">Confirmar</button>
-            </div>
-    </form>
+        <?php endif; ?>
     </div>
 
-<script src="../../assets/js/app.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBogGz5JQvFLb5Oe3MY1/df9gImpphH5G1R8Pp2NdT1wZjf9" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
 
-        // Loop over them and prevent submission
-        Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-            }
-
-            form.classList.add('was-validated')
-
-        }, false)
-        })
-</script>
 </body>
 </html>
