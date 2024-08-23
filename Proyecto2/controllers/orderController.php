@@ -89,6 +89,29 @@ class orderController{
         }else{
             header('Location:'.base_url.'?controller=order&action=my_orders');
         }
-
+    }
+    public function management(){
+        Utils::isAdmin();
+        $gestion = true;
+        $order = new Orders();
+        $orders = $order->getAll();
+    
+        require_once 'views/orders/my_orders.php';
+    }
+    public function status(){
+        Utils::isAdmin();
+        if(isset($_POST['id_pedido']) && isset($_POST['status'])){
+            // recoger datos del formulairo
+            $id_ped = $_POST['id_pedido'];
+            $status = $_POST['status'];
+            // update del pedido
+            $order = new Orders();
+            $order->setIdPed($id_ped);
+            $order->setStatus($status);
+            $order->updateOne();
+            header('Location:'.base_url.'?controller=order&action=detail&id_ped='.$id_ped);
+        }else{
+            header('Location:'.base_url.'?controller=home&action=body');
+        }
     }
 }

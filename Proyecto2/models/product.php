@@ -121,7 +121,8 @@ class Product{
     public function delete(){
         $sql = "DELETE FROM productos WHERE id_prod={$this->id_prod}";
         $delete = $this->db->query($sql);
-        
+        // var_dump($sql);
+        // die();
         $result = false;
         if($delete){
             $result = true;

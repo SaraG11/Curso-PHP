@@ -56,38 +56,43 @@
                       <?php if(isset($_SESSION['admin'])) : ?>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=category&action=index">Gestionar categorias</a></li>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=product&action=gestion">Gestionar productos</a></li>
-                        <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=management">Gestionar pedidos</a></li>
                       <?php endif; ?>
-                      <?php if(isset($_SESSION['identity'])): ?>
-                      <?php $stats = Utils::statsCarrito() ?>
+                      <?php if(!isset($_SESSION['admin'])): ?>
+                        <?php $stats = Utils::statsCarrito() ?>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=my_orders">Mis pedidos</a></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
-                      <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=my_orders">Mis Pedidos</a></li>
+                      <?php endif; ?>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
-                      <?php endif; ?>
                       
                     </ul>
                   </div>
                 </div>
             </div>
         </nav>
-    </header> 
+    </header>
     <!-- Mis pedidos -->
     <div class="container text-center mt-4">
                 <div class="col-12">
                     <div class="mb-3">
+                    <?php if(isset($gestion)) :?>
+                        <h2>Gestionar pedidos</h2>
+                    <?php else : ?>
                         <h2>Mis pedidos</h2>
+                    <?php endif; ?>
                     </div>
                     <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores molestias doloremque in? Harum, ab necessitatibus!</p>
                 </div>
     </div>
-    <div class="container w-25 mt-4">
+    <div class="container w-50 mt-4">
         <table class="table align-middle text-center">
             <thead class="table-dark">
                 <tr>
                     <th>N° Pedido</th>
                     <th>Total</th>
                     <th>Fecha</th>
+                    <th>Estatus</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,6 +108,9 @@
                     </td>
                     <td>
                         <?=$ped->fecha?>
+                    </td>
+                    <td>
+                    <?=Utils::showStatus($ped->status )?>
                     </td>
                 </tr>
                 <?php endwhile;?>

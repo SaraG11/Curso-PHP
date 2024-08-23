@@ -54,21 +54,22 @@
                       <?php if(isset($_SESSION['admin'])) : ?>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=category&action=index">Gestionar categorias</a></li>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=product&action=gestion">Gestionar productos</a></li>
-                        <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=management">Gestionar pedidos</a></li>
                       <?php endif; ?>
-                      <?php if(isset($_SESSION['identity'])): ?>
-                      <?php $stats = Utils::statsCarrito() ?>
+                      <?php if(!isset($_SESSION['admin'])): ?>
+                        <?php $stats = Utils::statsCarrito() ?>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=my_orders">Mis pedidos</a></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
+                      <?php endif; ?>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
-                      <?php endif; ?>
                       
                     </ul>
                   </div>
                 </div>
             </div>
         </nav>
-    </header> 
+    </header>
     <?php if(isset($_SESSION['order']) && $_SESSION['order'] == 'complete') : ?>
     <div class="container text-center mt-4">
         <h2>Tu pedido se ha confirmado</h2>

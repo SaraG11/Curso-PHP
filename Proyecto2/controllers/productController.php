@@ -80,6 +80,7 @@ class productController{
             $product = new Product;
             $product->setId($id_prod);
             $delete = $product->delete();
+            
             if($delete){
                 $_SESSION['delete'] = 'complete';
             }else{

@@ -54,23 +54,42 @@
                       <?php if(isset($_SESSION['admin'])) : ?>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=category&action=index">Gestionar categorias</a></li>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=product&action=gestion">Gestionar productos</a></li>
-                        <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=management">Gestionar pedidos</a></li>
                       <?php endif; ?>
-                      <?php if(isset($_SESSION['identity'])): ?>
-                      <?php $stats = Utils::statsCarrito() ?>
+                      <?php if(!isset($_SESSION['admin'])): ?>
+                        <?php $stats = Utils::statsCarrito() ?>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=my_orders">Mis pedidos</a></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
+                      <?php endif; ?>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
-                      <?php endif; ?>
                       
                     </ul>
                   </div>
                 </div>
             </div>
         </nav>
-    </header> 
-    <div class="container text-center mt-4">
-        <h2>Detalle del pedido</h2>
+    </header>
+    <div class="container mt-4">
+        <h2 class="text-center">Detalle del pedido</h2>
+        <!-- validacion para cambiar status del pedido (solo para admin) -->
+        <div class="container w-50 text-center mt-4">
+            <?php if(isset($_SESSION['admin'])) : ?>
+                <form action="<?=base_url?>?controller=order&action=status" method="POST">
+                    <input type="hidden" value="<?=$order->id_ped?>" name="id_pedido">
+                    <div class="btn-group">
+                        <select name="status" class="form-select" aria-label="Default select example">
+                            <option value="confirm" <?=$order->status == 'confirm' ? 'selected' : '';?> >Pendiente</option>
+                            <option value="preparation" <?=$order->status == 'preparation' ? 'selected' : '';?> >Preparando paquete</option>
+                            <option value="ready" <?=$order->status == 'ready' ? 'selected' : '';?> >Preparando para envio</option>
+                            <option value="sended" <?=$order->status == 'sended' ? 'selected' : '';?> >Enviado</option>
+                        </select>
+                    <button type="submit" class="btn btn-warning">Cambiar</button>
+
+                    </div>
+                </form>
+            <?php endif; ?>
+        </div>
         <?php if(isset($order)) : ?>
             <!-- Muestra los datos del pedido -->
             <div class="container w-50 p-3">
@@ -78,30 +97,45 @@
                     <thead class="table-dark">
                         <tr>
                             <th>
-                            <p class="float-start">Datos de Pedido </p> 
-                            <p  class="fw-bolder float-end"> N° Pedido: <?= $order->id_ped ?></p><br>
-                            <p  class="fw-bolder float-end">Total a pagar: $<?= $order->precio ?></p>
+                            <p class="float-start">Datos de Pedido <br>
+                            <small style="color: #2fbede !important;">Estado: <?=Utils::showStatus($order->status )?></small>
+                             </p> 
+                            <p  class="fw-bolder float-end"> N° Pedido: <?= $order->id_ped ?><br>
+                            Total a pagar: $<?= $order->precio ?>
+                            </p>
                             </th>
                         </tr>
                     </thead>
                     <tbody class="float-start">
                         <tr>
+                            <th>
+                                <p class="float-start">Direccion de envio <br>
+                                Pais: <?= $order->pais ?><br>
+                                Ciudad: <?= $order->localidad ?><br>
+                                Dirección: <?= $order->direccion ?>
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
                             <th colspan="2">Productos Ordenados</th>
                         </tr>
                         <?php while ($product = $products->fetch_object()):?>
-                            <td style="width: 5% !important;">
+                        <tr colspan="2">
+                            <td>
                                 <?php if($product->imagen != null) : ?>
                                     <img src="<?=base_url?>uploads/images/<?=$product->imagen?>" class="card-img-top img-carrito" alt="">
                                 <?php else: ?>
                                     <img src="<?=base_url?>assets/img/ropa_global.jpg" class="card-img-top img-carrito" alt="">
                                 <?php endif;?>
                             </td>
-                        <td style="width: 5% !important;">
-                            <p>Nombre: <?= $product->nombre ?></p>
-                            <p>Unidades: <?= $product->unidades ?></p>
-                        </td>
+                            <td>
+                                <p>Nombre: <?= $product->nombre ?></p>
+                            </td>
+                            <td>
+                                <p>Unidades: <?= $product->unidades ?></p>
+                            </td>
+                        </tr>
                         <?php endwhile; ?>
-                        
                     </tbody>
                 </table>
             </div>

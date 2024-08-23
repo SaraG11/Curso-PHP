@@ -44,4 +44,18 @@ class utils{
         }
         return $stats;
     }
+    public static function showStatus($status){
+        $value = 'pendiente';
+
+        if($status == 'confirm'){
+            $value = 'Pendiente';
+        }elseif($status== 'preparation'){
+            $value = 'Tu pedido se esta empaquetando';
+        }elseif($status == 'ready'){
+            $value = 'Tu pedido se esta preparando para el envio';
+        }elseif($status == 'sended'){
+            $value = 'Tu pedido ha sido enviado';
+        }
+        return $value;
+    }
 }

@@ -56,13 +56,15 @@
                       <?php if(isset($_SESSION['admin'])) : ?>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=category&action=index">Gestionar categorias</a></li>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=product&action=gestion">Gestionar productos</a></li>
-                        <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=management">Gestionar pedidos</a></li>
                       <?php endif; ?>
-                      <?php if(isset($_SESSION['identity'])): ?>
-                      <li><a class="dropdown-item" href="#">Mis pedidos</a></li>
+                      <?php if(!isset($_SESSION['admin'])): ?>
+                        <?php $stats = Utils::statsCarrito() ?>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=my_orders">Mis pedidos</a></li>
+                      <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
+                      <?php endif; ?>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
-                      <?php endif; ?>
                       
                     </ul>
                   </div>
@@ -75,7 +77,7 @@
     <div class="container text-center">
         <div class="row mb-3">
             <div class="col-12">
-                <div class="mb-3 mt-5">
+                <div class="mt-4">
                     <h2>Productos</h2>
                 </div>
             </div> 
@@ -131,7 +133,7 @@
                 </td>
                 </tr>
             </tbody>
-        <?php endwhile ?>
+        <?php endwhile; ?>
         </table>
         <a href="<?=base_url?>?controller=product&action=create" type="submit" class="btn btn-success">Crear producto</a>
     </div>  

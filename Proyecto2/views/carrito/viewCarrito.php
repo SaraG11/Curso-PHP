@@ -56,22 +56,22 @@
                       <?php if(isset($_SESSION['admin'])) : ?>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=category&action=index">Gestionar categorias</a></li>
                         <li><a class="dropdown-item" href="<?=base_url?>?controller=product&action=gestion">Gestionar productos</a></li>
-                        <li><a class="dropdown-item" href="#">Gestionar pedidos</a></li>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=management">Gestionar pedidos</a></li>
                       <?php endif; ?>
-                      <?php if(isset($_SESSION['identity'])): ?>
-                      <?php $stats = Utils::statsCarrito() ?>
+                      <?php if(!isset($_SESSION['admin'])): ?>
+                        <?php $stats = Utils::statsCarrito() ?>
+                        <li><a class="dropdown-item" href="<?=base_url?>?controller=order&action=my_orders">Mis pedidos</a></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mi Carrito (<?=$stats['count']?>)</a></li>
-                      <li><a class="dropdown-item" href="<?=base_url?>?controller=carrito&action=index">Mis Pedidos</a></li>
+                      <?php endif; ?>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="<?=base_url?>?controller=users&action=logout">Cerrar Sesion</a></li>
-                      <?php endif; ?>
                       
                     </ul>
                   </div>
                 </div>
             </div>
         </nav>
-    </header> 
+    </header>
     <!-- Validacion de si existen articulos en el carrito si no manda un mensaje -->
     <?php if(!isset($_SESSION['carrito'])) : ?>
             <div class="container text-center mt-4">
@@ -107,10 +107,11 @@
                     <td style="width: 5% !important;">
                         <h5><a class="link-dark link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="<?=base_url?>?controller=category&action=showCat&id_cat=<?=$element['id_cat']?>"><?=$element['nombre'] ?></a></h5>
                         <small>Precio Unidad: $<?=$element['precio'] ?></small> <br>
-                        <small>Unidades: <?=$element['unidades'] ?></small>
+                        <small>Unidades: 
+                            <a class="btn" href="<?=base_url?>?controller=carrito&action=down&index=<?=$indice?>">-</a> <?=$element['unidades'] ?> <a class="btn" href="<?=base_url?>?controller=carrito&action=up&index=<?=$indice?>">+</a></small>
                     </td>
                     <td style="width: 8% !important;">
-                        <a href="#"><ion-icon name="trash" class="icon-delete"></ion-icon></a>
+                        <a href="<?=base_url?>?controller=carrito&action=remove&index=<?=$indice?>"><ion-icon name="trash" class="icon-delete"></ion-icon></a>
                     </td>
                 </tr>
                 <?php endforeach;?>

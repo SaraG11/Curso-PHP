@@ -140,4 +140,16 @@ class Orders{
         }
         return $result;
     }
+    public function updateOne(){
+        $sql = "UPDATE pedidos SET status='{$this->getStatus()}'";
+        $sql .= " WHERE id_ped={$this->getIdPed()};";
+        // var_dump($sql);
+        // die();
+        $save = $this->db->query($sql);
+        $result = false;
+        if($save){
+            $result = true;
+        }
+        return $result;
+    }
 }
