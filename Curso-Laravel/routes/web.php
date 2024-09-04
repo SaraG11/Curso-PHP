@@ -14,5 +14,34 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    echo 'Hola mundo';
+});
+
+Route::get('/date', function () {
+    return view('date');
+});
+
+Route::get('/pelicula/{titulo}/{year?}', function($titulo, $year = 2019){
+    return view('pelicula', array(
+        'titulo' => $titulo,
+        'year' => $year
+    ));
+})->where(array(
+    'titulo' => '[a-zA-Z]+',
+    'year'  => '[0-9]+'
+));
+
+Route::get('/movieslist', function(){
+    $title = "Movies";
+    $list = array('Batman', 'Spiderman', 'Wolverin');
+    // return view('peliculas.movieslist', array(
+    //     'title' => $title
+    // ));
+    return view('peliculas.movieslist')
+            ->with('title', $title)
+            ->with('list', $list);
+});
+
+Route::get('/generic', function(){
+    return view('page');
 });
