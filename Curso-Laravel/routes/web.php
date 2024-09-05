@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +23,15 @@ Route::get('/date', function () {
     return view('date');
 });
 
+Route::get('/movies/{page?}', [MoviesController::class, 'index']);
+
+Route::get('/detail', [MoviesController::class, 'detail']);
+
+Route::get('/redirect', [MoviesController::class, 'redirect']);
+
+Route::resource('user', UserController::class);
+
+/*
 Route::get('/pelicula/{titulo}/{year?}', function($titulo, $year = 2019){
     return view('pelicula', array(
         'titulo' => $titulo,
@@ -44,4 +55,5 @@ Route::get('/movieslist', function(){
 
 Route::get('/generic', function(){
     return view('page');
-});
+});*/
+
